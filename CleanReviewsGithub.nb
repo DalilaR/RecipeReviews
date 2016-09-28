@@ -1,0 +1,1047 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 10.4' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       158,          7]
+NotebookDataLength[     34121,       1039]
+NotebookOptionsPosition[     31871,        958]
+NotebookOutlinePosition[     32296,        975]
+CellTagsIndexPosition[     32253,        972]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Analysis of Recipes Reviews", "Subsection",
+ CellChangeTimes->{{3.677515769038999*^9, 3.6775157749980783`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+Get reviews For Simply Sour Cream Chicken Enchilada from Food.com\
+\>", "Subsubsection",
+ CellChangeTimes->{{3.6775157836094837`*^9, 3.677515795429714*^9}, {
+  3.6840050592758827`*^9, 3.684005075562008*^9}}],
+
+Cell[TextData[StyleBox["Read the reviews", "Subsubsubsection"]], "Text",
+ CellChangeTimes->{{3.6840051074995937`*^9, 3.684005119135914*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+  "recipeURL", " ", "=", " ", 
+   "\"\<http://www.food.com/recipe/simply-sour-cream-chicken-enchiladas-\
+129926/review?pn=\>\""}], ";"}]], "Input",
+ CellChangeTimes->{{3.684040640478635*^9, 3.68404066308529*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"reviews", " ", "=", " ", 
+   RowBox[{"Table", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"recipeReview", "=", 
+       RowBox[{"Import", "[", 
+        RowBox[{
+         RowBox[{"recipeURL", "<>", 
+          RowBox[{"ToString", "[", "i", "]"}]}], ",", "\"\<Plaintext\>\""}], 
+        "]"}]}], ";", "\n", 
+      RowBox[{"x", " ", "=", " ", 
+       RowBox[{"StringSplit", "[", 
+        RowBox[{
+        "recipeReview", ",", "\"\< Most Helpful Newest Highest Rating\>\""}], 
+        "]"}]}], ";", "\[IndentingNewLine]", 
+      RowBox[{"x", " ", "=", " ", 
+       RowBox[{"StringSplit", "[", 
+        RowBox[{
+         RowBox[{"x", "[", 
+          RowBox[{"[", "2", "]"}], "]"}], ",", 
+         RowBox[{
+         "RegularExpression", "[", "\"\<\\\\d\\\\d\\\\d\\\\d\>\"", "]"}]}], 
+        "]"}]}], ";", " ", 
+      RowBox[{"x", "=", " ", 
+       RowBox[{"Most", "[", "x", "]"}]}]}], ",", 
+     RowBox[{"{", 
+      RowBox[{"i", ",", "2", ",", "65"}], "}"}]}], "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"reviews", " ", "=", " ", 
+   RowBox[{"Flatten", "[", 
+    RowBox[{"reviews", ",", "2"}], "]"}]}], ";"}]}], "Input",
+ CellChangeTimes->{{3.6775149422541037`*^9, 3.677514943689892*^9}, {
+   3.67751501981176*^9, 3.677515052203322*^9}, {3.677515100187093*^9, 
+   3.6775151250819187`*^9}, 3.677515181233837*^9, {3.677515274408127*^9, 
+   3.6775152989116783`*^9}, {3.67751535691893*^9, 3.677515358517786*^9}, {
+   3.6775158099107447`*^9, 3.677515839029208*^9}, {3.681635404627026*^9, 
+   3.681635406124668*^9}, {3.6824111355557823`*^9, 3.6824111361613913`*^9}, {
+   3.683203244080092*^9, 3.683203251558628*^9}, {3.684040669214346*^9, 
+   3.684040671830593*^9}}],
+
+Cell["See what is in the reviews", "Text",
+ CellChangeTimes->{{3.684005225468658*^9, 3.684005233891179*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"reviews", "[", 
+  RowBox[{"[", "3", "]"}], "]"}]], "Input",
+ CellChangeTimes->{{3.682607370061493*^9, 3.682607388442647*^9}, {
+  3.682607543760676*^9, 3.6826075526222553`*^9}}],
+
+Cell[BoxData["\<\" version of cookbook by the way, now my husband in general \
+HATES macaroni and cheese, reminds him of school cafeteria food. I made this \
+last night, following recipe exactly, and he ate half of a 9 by 13 baking \
+dish of it with sliced fresh tomatoes from the garden, couldn't believe it \
+was mac and cheese and tasted this, and bought memories of gram and great \
+gramma back to me. Thank you for posting. The only other comment is if you \
+want 'blue box or velveeta\\\" stay with it, they don't do it for me, this is \
+a different grown up flavor which is wonderful. Don't mess with the original. \
+This is fantastic, despite the time involved, always worth it.       20 \
+people found this helpful. Was it helpful to you? [ Yes ] [ No ]              \
+     bunnylove in NEW ENGLAND   July 25, \"\>"], "Output",
+ CellChangeTimes->{{3.6826073754730186`*^9, 3.682607389002721*^9}, {
+  3.682607541246125*^9, 3.682607553596833*^9}}]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+Remove statements like the followings:
+20 people found this helpful. Was it helpful to you? [ Yes ] [ No ]           \
+        bunnylove in NEW ENGLAND   July 25.  
+You will notice that we are mixing regular expression with Mathematica own \
+pattern words\
+\>", "Subsubtitle",
+ CellChangeTimes->{{3.684005258867631*^9, 3.684005349357354*^9}}],
+
+Cell[BoxData[
+ RowBox[{"newclean", " ", "=", 
+  RowBox[{"Map", "[", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"StringDelete", "[", 
+      RowBox[{"#", ",", 
+       RowBox[{
+        RowBox[{"RegularExpression", "[", "\"\<\\\\d+\>\"", "]"}], "~~", 
+        "Whitespace", "~~", 
+        RowBox[{"RegularExpression", "[", "\"\<people|person\>\"", "]"}], "~~",
+         "Whitespace", "~~", 
+        RowBox[{"RegularExpression", "[", "\"\<\\\\s*[^?]+\>\"", "]"}], "~~", 
+        "Whitespace", "~~", 
+        RowBox[{"RegularExpression", "[", "\"\<\\\\s*[^,]+\>\"", "]"}]}]}], 
+      "]"}], "&"}], ",", "reviews"}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.682607572807188*^9, 3.682607775575911*^9}, {
+  3.682607838713222*^9, 3.6826078688462687`*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Export it for further use", "Subsubtitle",
+ CellChangeTimes->{{3.684005366086739*^9, 3.684005371709261*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Export", "[", 
+  RowBox[{"\"\<newclean.txt\>\"", ",", "newclean"}], "]"}]], "Input",
+ CellChangeTimes->{{3.682610531439824*^9, 3.6826105437662287`*^9}}],
+
+Cell[BoxData["\<\"newclean.txt\"\>"], "Output",
+ CellChangeTimes->{3.6826105444257393`*^9}]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+Tokenize by sentences and by words.  Make sure to remove all stop words, and \
+to keep only sentences of 4 words or more.\
+\>", "Subsubtitle",
+ CellChangeTimes->{{3.684005418778935*^9, 3.6840054288665857`*^9}, {
+  3.684005484503265*^9, 3.6840055269661627`*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"Nostopword", " ", "=", 
+   RowBox[{"DeleteCases", "[", 
+    RowBox[{
+     RowBox[{"Map", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"TextCases", "[", 
+         RowBox[{"#", ",", "\"\<Word\>\""}], "]"}], "&"}], ",", 
+       RowBox[{"DeleteStopwords", "[", 
+        RowBox[{"Flatten", "[", 
+         RowBox[{"Map", "[", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"TextCases", "[", 
+             RowBox[{"#", ",", "\"\<Sentence\>\""}], "]"}], "&"}], ",", 
+           "newclean"}], "]"}], "]"}], "]"}]}], "]"}], ",", 
+     RowBox[{"{", "}"}]}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{"dataReady", " ", "=", " ", 
+  RowBox[{"Select", "[", 
+   RowBox[{"Nostopword", ",", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"Length", "[", "#", "]"}], " ", ">=", " ", "4"}], " ", "&"}]}], 
+   "]"}]}]}], "Input",
+ CellChangeTimes->{{3.682607944609847*^9, 3.682607953477108*^9}, {
+  3.682608000060103*^9, 3.682608001050309*^9}, {3.682608106041174*^9, 
+  3.682608109688994*^9}, {3.682608172469921*^9, 3.682608201268927*^9}, {
+  3.68260824219936*^9, 3.6826082773832903`*^9}, {3.682608315789365*^9, 
+  3.682608323234548*^9}, {3.6826083540704803`*^9, 3.6826084836299686`*^9}, {
+  3.682608525077977*^9, 3.6826085302524433`*^9}, {3.683209333451005*^9, 
+  3.683209348881319*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Lowercase all the words, and check what\[CloseCurlyQuote]s in \
+dataReady", "Subsubtitle",
+ CellChangeTimes->{{3.684005550886423*^9, 3.6840055764761257`*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"dataReady", " ", "=", 
+   RowBox[{"Map", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"ToLowerCase", "[", "#", "]"}], "&"}], ",", "dataReady"}], 
+    "]"}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.683209378399941*^9, 3.683209434933322*^9}, {
+  3.683209598353237*^9, 3.683209601746181*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"dataReady", "[", 
+  RowBox[{"[", 
+   RowBox[{"1", ";;", "3"}], "]"}], "]"}]], "Input",
+ CellChangeTimes->{{3.683209613711397*^9, 3.6832096230314903`*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{"\<\"yesterday\"\>", ",", "\<\"say\"\>", ",", "\<\"bit\"\>", 
+     ",", "\<\"time\"\>", ",", "\<\"consuming\"\>", ",", "\<\"faster\"\>", 
+     ",", "\<\"damn\"\>", ",", "\<\"good\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"took\"\>", ",", "\<\"advice\"\>", ",", "\<\"added\"\>", 
+     ",", "\<\"cumin\"\>", ",", "\<\"onions\"\>", ",", "\<\"chicken\"\>", 
+     ",", "\<\"sauce\"\>"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{"\<\"used\"\>", ",", "\<\"rotel\"\>", ",", "\<\"lieu\"\>", 
+     ",", "\<\"chopped\"\>", ",", "\<\"chiles\"\>"}], "}"}]}], 
+  "}"}]], "Output",
+ CellChangeTimes->{3.683631950478053*^9}]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+In here, we just read and put in the ingredients in the recipe ingredients \
+list\
+\>", "Subsubtitle",
+ CellChangeTimes->{{3.6840055875968246`*^9, 3.684005620425064*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"IntheRecipe", " ", "=", " ", 
+  RowBox[{"{", 
+   RowBox[{
+   "\"\<chicken\>\"", ",", "\"\<onion\>\"", ",", "\"\<oil\>\"", ",", 
+    "\"\<tortilla\>\"", ",", "\"\<cheese\>\"", ",", "\"\<butter\>\"", ",", 
+    "\"\<mexican\>\"", ",", "\"\<monterey\>\"", ",", "\"\<jack\>\"", ",", 
+    "\"\<flour\>\"", ",", "\"\<chicken broth\>\"", ",", "\"\<sour cream\>\"", 
+    ",", "\"\<green chilly\>\"", ",", "\"\<green\>\"", ",", "\"\<chilly\>\"", 
+    ",", "\"\<broth\>\"", ",", "\"\<chees\>\""}], "}"}]}]], "Input",
+ CellChangeTimes->{{3.683637427901718*^9, 3.683637434582199*^9}, {
+  3.6837903501641273`*^9, 3.683790352273136*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{"\<\"chicken\"\>", ",", "\<\"onion\"\>", ",", "\<\"oil\"\>", 
+   ",", "\<\"tortilla\"\>", ",", "\<\"cheese\"\>", ",", "\<\"butter\"\>", 
+   ",", "\<\"mexican\"\>", ",", "\<\"monterey\"\>", ",", "\<\"jack\"\>", 
+   ",", "\<\"flour\"\>", ",", "\<\"chicken broth\"\>", 
+   ",", "\<\"sour cream\"\>", ",", "\<\"green chilly\"\>", 
+   ",", "\<\"green\"\>", ",", "\<\"chilly\"\>", ",", "\<\"broth\"\>", 
+   ",", "\<\"chees\"\>"}], "}"}]], "Output",
+ CellChangeTimes->{3.683637477249481*^9, 3.683788021318416*^9, 
+  3.6837903551161623`*^9}]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+In here, we put in all the ingredients mentioned in the recipe and reviews.  \
+You will notice that we have one and 2 words ingredients.  Many of you wonder \
+why not use the dictionary to see if a word falls in the food category.  The \
+reason is that some of these are not in most dictionaries.\
+\>", "Subsubtitle",
+ CellChangeTimes->{{3.684005645786119*^9, 3.6840057469898853`*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"EnchiladaIng", " ", "=", " ", 
+   RowBox[{"{", 
+    RowBox[{
+    "\"\<chicken\>\"", ",", "\"\<onion\>\"", ",", "\"\<oil\>\"", ",", 
+     "\"\<tortilla\>\"", ",", "\"\<cheese\>\"", ",", "\"\<butter\>\"", ",", 
+     "\"\<mexican\>\"", ",", "\"\<monterey\>\"", ",", "\"\<jack\>\"", ",", 
+     "\"\<flour\>\"", ",", "\"\<chicken broth\>\"", ",", "\"\<sour cream\>\"",
+      ",", "\"\<green chilly\>\"", ",", "\"\<green\>\"", ",", 
+     "\"\<chilly\>\"", ",", "\"\<broth\>\"", ",", "\"\<cumin\>\"", ",", 
+     "\"\<pepper\>\"", ",", "\"\<tomato\>\"", ",", "\"\<jalapeno\>\"", ",", 
+     "\"\<chile\>\"", ",", "\"\<corn\>\"", ",", "\"\<garlic\>\"", ",", 
+     "\"\<rotel\>\"", ",", "\"\<soup\>\"", ",", "\"\<salsa\>\"", ",", 
+     "\"\<rice\>\"", ",", "\"\<salt\>\"", ",", "\"\<breast\>\"", ",", 
+     "\"\<meat\>\"", ",", "\"\<roux\>\"", ",", "\"\<cilantro\>\"", ",", 
+     "\"\<beef\>\"", ",", "\"\<yogurt\>\"", ",", "\"\<roast\>\"", ",", 
+     "\"\<juic\>\"", ",", "\"\<queso\>\"", ",", "\"\<turkei\>\"", ",", 
+     "\"\<oliv\>\"", ",", "\"\<tomatillo\>\"", ",", "\"\<oregano\>\"", ",", 
+     "\"\<fajita\>\"", ",", "\[IndentingNewLine]", "\"\<bouillon\>\"", ",", 
+     "\"\<lettic\>\"", ",", "\"\<american\>\"", ",", "\"\<shrimp\>\"", ",", 
+     "\"\<mushroom\>\"", ",", "\"\<jalape\[NTilde]os\>\"", ",", 
+     "\"\<hamburg\>\"", ",", "\"\<chive\>\"", ",", "\"\<colbi\>\"", ",", 
+     "\"\<avocado\>\"", ",", "\"\<cornstartch\>\"", ",", "\"\<zesti\>\"", 
+     ",", "\"\<zatarain'\>\"", ",", "\"\<tenderloin\>\"", ",", "\"\<tea\>\"", 
+     ",", "\"\<taquito\>\"", ",", "\"\<steak\>\"", ",", "\"\<sprout\>\"", 
+     ",", "\"\<soybean\>\"", ",", "\"\<serrano\>\"", ",", "\"\<seiten\>\"", 
+     ",", "\"\<salsa\>\"", ",", "\"\<salad\>\"", ",", "\"\<ricotta\>\"", ",", 
+     "\"\<ranchero\>\"", ",", "\"\<qusaddilla\>\"", ",", "\"\<potato\>\"", 
+     ",", "\"\<poblano\>\"", ",", "\"\<pinto\>\"", ",", "\"\<pesto\>\"", ",", 
+     "\"\<pepperjack\>\"", ",", "\"\<mezzetta\>\"", ",", "\"\<herb\>\"", ",", 
+     "\"\<guacomol\>\"", ",", "\"\<ginger\>\"", ",", "\"\<chipolt\>\"", ",", 
+     "\"\<chipotle-lim\>\"", ",", "\"\<chees\>\"", ",", "\"\<goos\>\"", ",", 
+     "\"\<paprika\>\"", ",", "\"\<green chili\>\"", ",", 
+     "\"\<green onion\>\"", ",", "\"\<green pepper\>\"", ",", 
+     "\"\<black oliv\>\"", ",", "\"\<green pepper\>\"", ",", 
+     "\"\<spanish rice\>\"", ",", " ", "\"\<taco season\>\"", ",", 
+     "\"\<rotel tomato\>\""}], "}"}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.683631507040084*^9, 3.683631617684085*^9}, {
+  3.68363166511553*^9, 3.6836319365290623`*^9}, {3.6836336110909233`*^9, 
+  3.683634171455991*^9}, {3.683634210413381*^9, 3.68363423993438*^9}, {
+  3.683634288314994*^9, 3.68363430333921*^9}, {3.683636326417593*^9, 
+  3.683636331157896*^9}, {3.683636476724188*^9, 3.683636480330873*^9}, {
+  3.683636707685362*^9, 3.6836367113240957`*^9}, {3.683637333292591*^9, 
+  3.6836374087592373`*^9}, {3.6837900311730337`*^9, 3.683790099082262*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+Now You are ready to analyze the reviews.  You can stop at this point\
+\>", "Subchapter",
+ CellChangeTimes->{{3.6840064755626993`*^9, 3.684006500264923*^9}}],
+
+Cell["Save dataReady", "Subsubtitle",
+ CellChangeTimes->{{3.684006618234973*^9, 3.684006623298716*^9}}],
+
+Cell[BoxData[
+ RowBox[{"DumpSave", "[", 
+  RowBox[{"\"\<dataReady.mx\>\"", ",", "dataReady"}], "]"}]], "Input",
+ CellChangeTimes->{3.68400660984768*^9}],
+
+Cell["Simple Experiment: ", "Subsubsection",
+ CellChangeTimes->{{3.683210472582258*^9, 3.683210532451077*^9}, {
+  3.684005830263949*^9, 3.6840058424553347`*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["What if we check for co-occurence of words", "Subsubtitle",
+ CellChangeTimes->{{3.6840058506074343`*^9, 3.6840058656461678`*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"WSdataReady", " ", "=", " ", 
+   RowBox[{"WordStem", "[", "dataReady", "]"}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{"Select", "[", 
+  RowBox[{"WSdataReady", ",", 
+   RowBox[{
+    RowBox[{"ContainsAll", "[", 
+     RowBox[{"wordsToKeep", ",", "#"}], "]"}], "&"}]}], "]"}]}], "Input",
+ CellChangeTimes->{{3.68321055317723*^9, 3.683210586117079*^9}, {
+  3.683210637938477*^9, 3.683210677232046*^9}, {3.683210969767034*^9, 
+  3.6832109951277857`*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"WSdataReady", " ", "=", " ", 
+   RowBox[{"WordStem", "[", "dataReady", "]"}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.6832100185250387`*^9, 3.6832100442105093`*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"coOccur", " ", "=", " ", 
+    RowBox[{"Map", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"Table", "[", 
+        RowBox[{
+         RowBox[{"{", 
+          RowBox[{
+           RowBox[{"#", "[", 
+            RowBox[{"[", "i", "]"}], "]"}], ",", 
+           RowBox[{"#", "[", 
+            RowBox[{"[", 
+             RowBox[{"i", "+", "1"}], "]"}], "]"}]}], "}"}], ",", 
+         RowBox[{"{", 
+          RowBox[{"i", ",", 
+           RowBox[{
+            RowBox[{"Length", "[", "#", "]"}], "-", "1"}]}], "}"}]}], "]"}], 
+       "&"}], ",", "WSdataReady"}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+  "\[IndentingNewLine]"}]], "Input",
+ CellChangeTimes->{{3.683210052955748*^9, 3.683210268757675*^9}, {
+   3.683211261344001*^9, 3.683211272375801*^9}, {3.683211311488235*^9, 
+   3.683211438137141*^9}, {3.683211524504323*^9, 3.68321157948507*^9}, 
+   3.684005823441865*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["\<\
+What is interesting is that high frequency co-current words tend to represent \
+one ingredient. For instance, sour and cream, or corn tortilla.  This means \
+that we need to look at these words as one word not 2.  I also did 3-gram \
+words, but the results were non-informative.\
+\>", "Subsubtitle",
+ CellChangeTimes->{{3.684006196487672*^9, 3.684006320170102*^9}, {
+  3.684006406727275*^9, 3.684006446307588*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"coOccurFreq", " ", "=", 
+  RowBox[{
+   RowBox[{"Reverse", "[", 
+    RowBox[{"SortBy", "[", 
+     RowBox[{
+      RowBox[{"Tally", "[", 
+       RowBox[{"Select", "[", 
+        RowBox[{
+         RowBox[{"Flatten", "[", 
+          RowBox[{"coOccur", ",", "1"}], "]"}], ",", 
+         RowBox[{
+          RowBox[{"ContainsAll", "[", 
+           RowBox[{"wordsToKeep", ",", "#"}], "]"}], "&"}]}], "]"}], "]"}], 
+      ",", "Last"}], "]"}], "]"}], "[", 
+   RowBox[{"[", 
+    RowBox[{"1", ";;", "100"}], "]"}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.683211591765682*^9, 3.683211666578534*^9}, 
+   3.683222639350745*^9, {3.683222873271819*^9, 3.683222884494294*^9}, {
+   3.683633291763103*^9, 3.683633296521001*^9}}],
+
+Cell[BoxData[
+ RowBox[{"{", 
+  RowBox[{
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\<\"sour\"\>", ",", "\<\"cream\"\>"}], "}"}], ",", "114"}], 
+    "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\<\"green\"\>", ",", "\<\"chili\"\>"}], "}"}], ",", "70"}], 
+    "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\<\"chili\"\>", ",", "\<\"powder\"\>"}], "}"}], ",", "46"}], 
+    "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\<\"chicken\"\>", ",", "\<\"onion\"\>"}], "}"}], ",", "36"}], 
+    "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\<\"corn\"\>", ",", "\<\"tortilla\"\>"}], "}"}], ",", "35"}], 
+    "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\<\"taco\"\>", ",", "\<\"season\"\>"}], "}"}], ",", "33"}], 
+    "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\<\"follow\"\>", ",", "\<\"recip\"\>"}], "}"}], ",", "32"}], 
+    "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\<\"cook\"\>", ",", "\<\"chicken\"\>"}], "}"}], ",", "29"}], 
+    "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\<\"chicken\"\>", ",", "\<\"enchilada\"\>"}], "}"}], ",", 
+     "28"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\<\"chicken\"\>", ",", "\<\"broth\"\>"}], "}"}], ",", "28"}], 
+    "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\<\"green\"\>", ",", "\<\"chile\"\>"}], "}"}], ",", "27"}], 
+    "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\<\"enchilada\"\>", ",", "\<\"sauc\"\>"}], "}"}], ",", "27"}], 
+    "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\<\"shred\"\>", ",", "\<\"chicken\"\>"}], "}"}], ",", "26"}], 
+    "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\<\"season\"\>", ",", "\<\"chicken\"\>"}], "}"}], ",", "26"}], 
+    "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\<\"easi\"\>", ",", "\<\"make\"\>"}], "}"}], ",", "25"}], 
+    "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\<\"cream\"\>", ",", "\<\"sauc\"\>"}], "}"}], ",", "24"}], 
+    "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\<\"chicken\"\>", ",", "\<\"breast\"\>"}], "}"}], ",", "24"}], 
+    "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\<\"us\"\>", ",", "\<\"corn\"\>"}], "}"}], ",", "22"}], "}"}], 
+   ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\<\"enchilada\"\>", ",", "\<\"recip\"\>"}], "}"}], ",", "22"}],
+     "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\<\"recip\"\>", ",", "\<\"exactli\"\>"}], "}"}], ",", "20"}], 
+    "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\<\"flour\"\>", ",", "\<\"tortilla\"\>"}], "}"}], ",", "20"}], 
+    "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\<\"chicken\"\>", ",", "\<\"mixtur\"\>"}], "}"}], ",", "20"}], 
+    "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\<\"salt\"\>", ",", "\<\"pepper\"\>"}], "}"}], ",", "19"}], 
+    "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\<\"rotel\"\>", ",", "\<\"tomato\"\>"}], "}"}], ",", "18"}], 
+    "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\<\"great\"\>", ",", "\<\"recip\"\>"}], "}"}], ",", "18"}], 
+    "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\<\"cumin\"\>", ",", "\<\"chili\"\>"}], "}"}], ",", "17"}], 
+    "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\<\"chicken\"\>", ",", "\<\"cook\"\>"}], "}"}], ",", "17"}], 
+    "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\<\"ad\"\>", ",", "\<\"cumin\"\>"}], "}"}], ",", "17"}], "}"}],
+    ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\<\"time\"\>", ",", "\<\"add\"\>"}], "}"}], ",", "16"}], "}"}],
+    ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\<\"spanish\"\>", ",", "\<\"rice\"\>"}], "}"}], ",", "16"}], 
+    "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\<\"cream\"\>", ",", "\<\"soup\"\>"}], "}"}], ",", "16"}], 
+    "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\<\"cream\"\>", ",", "\<\"chicken\"\>"}], "}"}], ",", "16"}], 
+    "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\<\"can\"\>", ",", "\<\"soup\"\>"}], "}"}], ",", "16"}], "}"}],
+    ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\<\"rotisseri\"\>", ",", "\<\"chicken\"\>"}], "}"}], ",", 
+     "15"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\<\"garlic\"\>", ",", "\<\"powder\"\>"}], "}"}], ",", "15"}], 
+    "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\<\"black\"\>", ",", "\<\"bean\"\>"}], "}"}], ",", "15"}], 
+    "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\<\"us\"\>", ",", "\<\"chicken\"\>"}], "}"}], ",", "14"}], 
+    "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\<\"refri\"\>", ",", "\<\"bean\"\>"}], "}"}], ",", "14"}], 
+    "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\<\"add\"\>", ",", "\<\"littl\"\>"}], "}"}], ",", "14"}], 
+    "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\<\"powder\"\>", ",", "\<\"cumin\"\>"}], "}"}], ",", "13"}], 
+    "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\<\"cumin\"\>", ",", "\<\"chicken\"\>"}], "}"}], ",", "13"}], 
+    "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\<\"ad\"\>", ",", "\<\"littl\"\>"}], "}"}], ",", "13"}], "}"}],
+    ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\<\"us\"\>", ",", "\<\"can\"\>"}], "}"}], ",", "12"}], "}"}], 
+   ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\<\"spice\"\>", ",", "\<\"chicken\"\>"}], "}"}], ",", "12"}], 
+    "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\<\"low\"\>", ",", "\<\"fat\"\>"}], "}"}], ",", "12"}], "}"}], 
+   ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\<\"cream\"\>", ",", "\<\"chees\"\>"}], "}"}], ",", "12"}], 
+    "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\<\"ad\"\>", ",", "\<\"rotel\"\>"}], "}"}], ",", "12"}], "}"}],
+    ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\<\"tortilla\"\>", ",", "\<\"instead\"\>"}], "}"}], ",", 
+     "11"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\<\"thing\"\>", ",", "\<\"differ\"\>"}], "}"}], ",", "11"}], 
+    "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\<\"second\"\>", ",", "\<\"time\"\>"}], "}"}], ",", "11"}], 
+    "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\<\"realli\"\>", ",", "\<\"good\"\>"}], "}"}], ",", "11"}], 
+    "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\<\"onion\"\>", ",", "\<\"mixtur\"\>"}], "}"}], ",", "11"}], 
+    "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\<\"mexican\"\>", ",", "\<\"food\"\>"}], "}"}], ",", "11"}], 
+    "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\<\"instead\"\>", ",", "\<\"flour\"\>"}], "}"}], ",", "11"}], 
+    "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\<\"green\"\>", ",", "\<\"enchilada\"\>"}], "}"}], ",", "11"}],
+     "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\<\"fat\"\>", ",", "\<\"sour\"\>"}], "}"}], ",", "11"}], "}"}],
+    ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\<\"definit\"\>", ",", "\<\"make\"\>"}], "}"}], ",", "11"}], 
+    "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\<\"crock\"\>", ",", "\<\"pot\"\>"}], "}"}], ",", "11"}], 
+    "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\<\"cream\"\>", ",", "\<\"enchilada\"\>"}], "}"}], ",", "11"}],
+     "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\<\"chicken\"\>", ",", "\<\"us\"\>"}], "}"}], ",", "11"}], 
+    "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\<\"chees\"\>", ",", "\<\"insid\"\>"}], "}"}], ",", "11"}], 
+    "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\<\"ad\"\>", ",", "\<\"1/2\"\>"}], "}"}], ",", "11"}], "}"}], 
+   ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\<\"5\"\>", ",", "\<\"star\"\>"}], "}"}], ",", "11"}], "}"}], 
+   ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\<\"1/2\"\>", ",", "\<\"tsp\"\>"}], "}"}], ",", "11"}], "}"}], 
+   ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\<\"1\"\>", ",", "\<\"tsp\"\>"}], "}"}], ",", "11"}], "}"}], 
+   ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\<\"mexican\"\>", ",", "\<\"restaur\"\>"}], "}"}], ",", "10"}],
+     "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\<\"insid\"\>", ",", "\<\"enchilada\"\>"}], "}"}], ",", "10"}],
+     "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\<\"dice\"\>", ",", "\<\"tomato\"\>"}], "}"}], ",", "10"}], 
+    "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\<\"chicken\"\>", ",", "\<\"fill\"\>"}], "}"}], ",", "10"}], 
+    "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\<\"chees\"\>", ",", "\<\"top\"\>"}], "}"}], ",", "10"}], 
+    "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\<\"add\"\>", ",", "\<\"rotel\"\>"}], "}"}], ",", "10"}], 
+    "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\<\"ad\"\>", ",", "\<\"chicken\"\>"}], "}"}], ",", "10"}], 
+    "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\<\"saute\"\>", ",", "\<\"onion\"\>"}], "}"}], ",", "9"}], 
+    "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\<\"mexican\"\>", ",", "\<\"rice\"\>"}], "}"}], ",", "9"}], 
+    "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\<\"make\"\>", ",", "\<\"dish\"\>"}], "}"}], ",", "9"}], "}"}],
+    ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\<\"love\"\>", ",", "\<\"recip\"\>"}], "}"}], ",", "9"}], 
+    "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\<\"just\"\>", ",", "\<\"us\"\>"}], "}"}], ",", "9"}], "}"}], 
+   ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\<\"food\"\>", ",", "\<\"processor\"\>"}], "}"}], ",", "9"}], 
+    "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\<\"famili\"\>", ",", "\<\"love\"\>"}], "}"}], ",", "9"}], 
+    "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\<\"chicken\"\>", ",", "\<\"sauc\"\>"}], "}"}], ",", "9"}], 
+    "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\<\"can\"\>", ",", "\<\"green\"\>"}], "}"}], ",", "9"}], "}"}],
+    ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\<\"wheat\"\>", ",", "\<\"tortilla\"\>"}], "}"}], ",", "8"}], 
+    "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\<\"us\"\>", ",", "\<\"low\"\>"}], "}"}], ",", "8"}], "}"}], 
+   ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\<\"us\"\>", ",", "\<\"2\"\>"}], "}"}], ",", "8"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\<\"time\"\>", ",", "\<\"make\"\>"}], "}"}], ",", "8"}], "}"}],
+    ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\<\"thank\"\>", ",", "\<\"deb\"\>"}], "}"}], ",", "8"}], "}"}],
+    ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\<\"red\"\>", ",", "\<\"pepper\"\>"}], "}"}], ",", "8"}], 
+    "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\<\"recip\"\>", ",", "\<\"make\"\>"}], "}"}], ",", "8"}], 
+    "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\<\"powder\"\>", ",", "\<\"chicken\"\>"}], "}"}], ",", "8"}], 
+    "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\<\"pepper\"\>", ",", "\<\"chicken\"\>"}], "}"}], ",", "8"}], 
+    "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\<\"littl\"\>", ",", "\<\"bit\"\>"}], "}"}], ",", "8"}], "}"}],
+    ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\<\"just\"\>", ",", "\<\"like\"\>"}], "}"}], ",", "8"}], "}"}],
+    ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\<\"jack\"\>", ",", "\<\"chees\"\>"}], "}"}], ",", "8"}], 
+    "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\<\"instead\"\>", ",", "\<\"green\"\>"}], "}"}], ",", "8"}], 
+    "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\<\"husband\"\>", ",", "\<\"love\"\>"}], "}"}], ",", "8"}], 
+    "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\<\"green\"\>", ",", "\<\"pepper\"\>"}], "}"}], ",", "8"}], 
+    "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\<\"doubl\"\>", ",", "\<\"recip\"\>"}], "}"}], ",", "8"}], 
+    "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\<\"bit\"\>", ",", "\<\"bland\"\>"}], "}"}], ",", "8"}], "}"}],
+    ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\<\"base\"\>", ",", "\<\"recip\"\>"}], "}"}], ",", "8"}], 
+    "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"\<\"ad\"\>", ",", "\<\"spice\"\>"}], "}"}], ",", "8"}], 
+    "}"}]}], "}"}]], "Output",
+ CellChangeTimes->{3.683633222872404*^9, 3.6836332979976377`*^9}]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{808, 703},
+WindowMargins->{{13, Automatic}, {36, Automatic}},
+FrontEndVersion->"11.0 for Mac OS X x86 (32-bit, 64-bit Kernel) (July 28, \
+2016)",
+StyleDefinitions->FrontEnd`FileName[{"Report"}, "StandardReport.nb", 
+  CharacterEncoding -> "UTF-8"]
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[580, 22, 117, 1, 32, "Subsection"],
+Cell[CellGroupData[{
+Cell[722, 27, 217, 4, 31, "Subsubsection"],
+Cell[942, 33, 140, 1, 30, "Text"],
+Cell[1085, 36, 247, 6, 84, "Input"],
+Cell[1335, 44, 1712, 41, 126, "Input"],
+Cell[3050, 87, 108, 1, 30, "Text"],
+Cell[CellGroupData[{
+Cell[3183, 92, 200, 4, 41, "Input"],
+Cell[3386, 98, 953, 12, 231, "Output"]
+}, Open  ]]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[4400, 117, 352, 7, 89, "Subsubtitle"],
+Cell[4755, 126, 741, 17, 147, "Input"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[5533, 148, 114, 1, 29, "Subsubtitle"],
+Cell[CellGroupData[{
+Cell[5672, 153, 176, 3, 41, "Input"],
+Cell[5851, 158, 91, 1, 41, "Output"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[5991, 165, 271, 5, 49, "Subsubtitle"],
+Cell[6265, 172, 1326, 32, 105, "Input"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[7628, 209, 164, 2, 29, "Subsubtitle"],
+Cell[7795, 213, 327, 9, 41, "Input"],
+Cell[CellGroupData[{
+Cell[8147, 226, 178, 4, 41, "Input"],
+Cell[8328, 232, 691, 15, 84, "Output"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[9068, 253, 180, 4, 29, "Subsubtitle"],
+Cell[CellGroupData[{
+Cell[9273, 261, 646, 11, 84, "Input"],
+Cell[9922, 274, 572, 10, 63, "Output"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[10543, 290, 395, 6, 69, "Subsubtitle"],
+Cell[10941, 298, 3000, 44, 315, "Input"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[13978, 347, 167, 3, 95, "Subchapter"],
+Cell[14148, 352, 103, 1, 29, "Subsubtitle"],
+Cell[14254, 355, 152, 3, 41, "Input"],
+Cell[14409, 360, 161, 2, 31, "Subsubsection"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[14607, 367, 135, 1, 29, "Subsubtitle"],
+Cell[14745, 370, 489, 12, 63, "Input"],
+Cell[15237, 384, 201, 4, 41, "Input"],
+Cell[15441, 390, 918, 25, 84, "Input"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[16396, 420, 424, 7, 69, "Subsubtitle"],
+Cell[CellGroupData[{
+Cell[16845, 431, 732, 19, 84, "Input"],
+Cell[17580, 452, 14263, 502, 630, "Output"]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
